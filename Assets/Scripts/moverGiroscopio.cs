@@ -13,6 +13,6 @@ public class moverGiroscopio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(Vector3.forward, Time.deltaTime * 360);
+        transform.Rotate(Vector3.forward, Time.deltaTime * 200);
     }
 }
