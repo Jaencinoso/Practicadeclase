@@ -12,6 +12,9 @@ TagManager:
   - Giroscopio
   - Meta
   - FXMonedas
+  - Powerup
+  - Candado
+  - Llave
   layers:
   - Default
   - TransparentFX

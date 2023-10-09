@@ -10,12 +10,14 @@ public class moverPersonaje : MonoBehaviour
     public bool quiereSaltar = false;
     public bool estaSuelo = false;
     public bool damage = false;
+    public bool hacersePequeño = false;
     public static bool fail = false;
     public AudioSource FX1;
     public AudioSource FX2;
     public AudioSource FX3;
     public AudioSource FX4;
     public AudioSource FX5;
+    public GameObject puerta;
     Rigidbody2D fisicas;
     SpriteRenderer rbsprite;
     // Start is called before the first frame update
@@ -35,7 +37,9 @@ public class moverPersonaje : MonoBehaviour
     {
         movX = Input.GetAxis("Horizontal");
 
-        if(Input.GetButtonDown("Jump"))
+        Vector2 direccion = new Vector2(movX, movY);
+
+        if (Input.GetButtonDown("Jump"))
         {
             quiereSaltar = true;
             FX2.Play();
@@ -46,6 +50,8 @@ public class moverPersonaje : MonoBehaviour
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
             Time.timeScale = 1;
         }
+
+
     }
     void FixedUpdate()
     {
@@ -94,12 +100,24 @@ public class moverPersonaje : MonoBehaviour
             Destroy(collision.gameObject);
             FX1.Play();
         }
-        else if(collision.gameObject.tag == "Estrellas")
+        else if (collision.gameObject.tag == "Estrellas")
         {
             Destroy(collision.gameObject);
             FX1.Play();
         }
-        else if(collision.gameObject.tag == "Meta")
+        else if (collision.gameObject.tag == "Powerup")
+        {
+            Destroy(collision.gameObject);
+            transform.localScale = new Vector2(1, 1);
+            FX1.Play();
+        }
+        else if (collision.gameObject.tag == "Llave")
+        {
+            Destroy(collision.gameObject);
+            Destroy(puerta);
+            FX1.Play();
+        }
+        else if (collision.gameObject.tag == "Meta")
         {
             Time.timeScale = 0;
             FX4.Play();
@@ -107,6 +125,6 @@ public class moverPersonaje : MonoBehaviour
 
         }
     }
-    
+ 
 
 }
