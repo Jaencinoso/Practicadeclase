@@ -70,7 +70,7 @@ public class moverPersonaje : MonoBehaviour
     void Cooldown()
     {
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        rbsprite.color = Color.green; 
+        rbsprite.color = Color.white; 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
