@@ -15,6 +15,7 @@ TagManager:
   - Powerup
   - Candado
   - Llave
+  - Colisionador Goomba
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Water
   - UI
   - Suelos
-  - 
+  - cabezaGoomba
   - 
   - 
   - 
