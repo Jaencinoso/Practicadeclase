@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class moverPersonaje : MonoBehaviour
 {
+    public int velocidad = 2;
     public float movX, movY;
     public float fuerzaSalto = 4;
     public bool quiereSaltar = false;
@@ -18,8 +19,14 @@ public class moverPersonaje : MonoBehaviour
     public AudioSource FX4;
     public AudioSource FX5;
     public GameObject puerta;
-    Rigidbody2D fisicas;
+    private Rigidbody2D fisicas;
     SpriteRenderer rbsprite;
+    private bool cambiarCara = true;
+    public Animator animator;
+    private bool estaSuelos;
+    public Transform pies;
+    public float area;
+    public LayerMask aquiSuelos;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,13 +58,25 @@ public class moverPersonaje : MonoBehaviour
             Time.timeScale = 1;
         }
 
+        if (movX < 0.0f && cambiarCara)
+        {
+            FlipPlayer();
+        }
 
+        if (movX > 0.0f && !cambiarCara)
+        {
+            FlipPlayer();
+        }
+
+        estaSuelos = Physics2D.OverlapCircle(pies.position, area, aquiSuelos);
+
+        animator.SetBool("estaSuelos", estaSuelos);
     }
     void FixedUpdate()
     {
-
+        animator.SetFloat("Velocidad", Mathf.Abs(movX));
        
-        Vector2 movimiento = new Vector2(movX * 2, fisicas.velocity.y);
+        Vector2 movimiento = new Vector2(movX * velocidad, fisicas.velocity.y);
         fisicas.velocity = movimiento;
 
         if (quiereSaltar && estaSuelo)
@@ -108,7 +127,7 @@ public class moverPersonaje : MonoBehaviour
         else if (collision.gameObject.tag == "Powerup")
         {
             Destroy(collision.gameObject);
-            transform.localScale = new Vector2(1, 1);
+            transform.localScale = new Vector2(0.25f, 0.25f);
             FX1.Play();
         }
         else if (collision.gameObject.tag == "Llave")
@@ -124,6 +143,13 @@ public class moverPersonaje : MonoBehaviour
             FX5.Stop();
 
         }
+    }
+    void FlipPlayer()
+    {
+        cambiarCara = !cambiarCara;
+        Vector2 playerScale = gameObject.transform.localScale;
+        playerScale.x *= -1;
+        transform.localScale = playerScale;
     }
  
 
